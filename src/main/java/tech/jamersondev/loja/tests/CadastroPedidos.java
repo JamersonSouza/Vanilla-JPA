@@ -15,6 +15,7 @@ import tech.jamersondev.loja.domain.ItemPedido;
 import tech.jamersondev.loja.domain.Loja;
 import tech.jamersondev.loja.domain.Pedido;
 import tech.jamersondev.loja.domain.Produto;
+import tech.jamersondev.loja.domain.RelatorioVendasDTO;
 import tech.jamersondev.loja.enums.CategoriaProdutosEnum;
 import tech.jamersondev.loja.util.JPAUtil;
 
@@ -50,6 +51,9 @@ public class CadastroPedidos {
 			
 			BigDecimal totalVendido = pedidoDAO.valorTotalVendido();
 			System.out.println("Valor total vendido foi: " + totalVendido);
+			
+			List<RelatorioVendasDTO> relatorio = pedidoDAO.relatorioVendas();
+			relatorio.forEach(System.out::println);
 		}
 		
 		private static void cadastrarProduto() {
