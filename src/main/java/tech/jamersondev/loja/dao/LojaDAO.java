@@ -1,5 +1,7 @@
 package tech.jamersondev.loja.dao;
 
+import java.util.List;
+
 import javax.persistence.EntityManager;
 
 import tech.jamersondev.loja.domain.Loja;
@@ -13,8 +15,10 @@ public class LojaDAO {
 		this.entityManager = entityManager;
 	}
 	
-	public void cadastrarLoja(Loja loja) {
-		this.entityManager.persist(loja);
+	public void cadastrarLoja(List<Loja> loja) {
+		for(Loja lj : loja) {
+			this.entityManager.persist(lj);
+		}
 	}
 	
 	public void atualizarLoja(Loja loja) {

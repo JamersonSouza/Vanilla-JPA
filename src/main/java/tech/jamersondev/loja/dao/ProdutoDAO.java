@@ -37,4 +37,11 @@ public class ProdutoDAO {
 				.getResultList();
 	}
 	
+	public List<Produto> findByNameLoja(String name) {
+		String jpql = "SELECT p FROM Produto p WHERE p.loja.nome = :name";
+		return this.entityManager.createQuery(jpql, Produto.class)
+				.setParameter("name", name)
+				.getResultList();
+	}
+	
 }
