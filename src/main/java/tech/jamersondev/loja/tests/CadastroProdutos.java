@@ -20,6 +20,7 @@ public class CadastroProdutos {
 		cadastrarProduto();
 		findProduto();
 		findAllProdutos();
+		findByNameProduto("Asus");
 	}
 
 	private static void findAllProdutos() {
@@ -27,6 +28,13 @@ public class CadastroProdutos {
 		ProdutoDAO produtoDAO = new ProdutoDAO(entityManager);
 		List<Produto> getAllProdutos = produtoDAO.findAllProdutos();
 		getAllProdutos.forEach(p -> {System.out.println(p.getNome());});
+	}
+	
+	private static void findByNameProduto(String name) {
+		EntityManager entityManager = JPAUtil.getEntityManager();
+		ProdutoDAO produtoDAO = new ProdutoDAO(entityManager);
+		List<Produto> getByNameAllProdutos = produtoDAO.findByNameProduto(name);
+		getByNameAllProdutos.forEach(p -> {System.out.println("Produtos encontrados: "+ p.getNome() + " Modelo: " + p.getDescricao());});
 	}
 
 	private static void findProduto() {
@@ -43,13 +51,21 @@ public class CadastroProdutos {
 				"Redmi note 12", new BigDecimal("800"), CategoriaProdutosEnum.CELULAR,
 				loja);
 		
+		Produto celular2 = new Produto(UUID.randomUUID(), "Samsung",
+				"A12", new BigDecimal("800"), CategoriaProdutosEnum.CELULAR,
+				loja);
+		
+		Produto celular3 = new Produto(UUID.randomUUID(), "Asus",
+				"Zenfone", new BigDecimal("800"), CategoriaProdutosEnum.CELULAR,
+				loja);
+		
 		EntityManager entityManager = JPAUtil.getEntityManager();
 		LojaDAO lojaDAO = new LojaDAO(entityManager);
 		ProdutoDAO produtoDAO = new ProdutoDAO(entityManager);
 		
 		entityManager.getTransaction().begin();
 		lojaDAO.cadastrarLoja(loja);
-		produtoDAO.cadastrarProduto(celular);
+		produtoDAO.cadastrarProduto(List.of(celular, celular2, celular3));
 		entityManager.getTransaction().commit();
 		entityManager.close();
 	}

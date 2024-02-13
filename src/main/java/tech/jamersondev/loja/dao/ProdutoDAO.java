@@ -15,8 +15,10 @@ public class ProdutoDAO {
 		this.entityManager = entityManager;
 	}
 	
-	public void cadastrarProduto(Produto prod) {
-		this.entityManager.persist(prod);
+	public void cadastrarProduto(List<Produto> prod) {
+		   for (Produto produto : prod) {
+		        this.entityManager.persist(produto);
+		    }
 	}
 	
 	public Produto findProduto(Long id) {
@@ -26,6 +28,13 @@ public class ProdutoDAO {
 	public List<Produto> findAllProdutos() {
 		String jpql = "SELECT p FROM Produto p";
 		return this.entityManager.createQuery(jpql, Produto.class).getResultList();
+	}
+	
+	public List<Produto> findByNameProduto(String name) {
+		String jpql = "SELECT p FROM Produto p WHERE p.nome = :name";
+		return this.entityManager.createQuery(jpql, Produto.class)
+				.setParameter("name", name)
+				.getResultList();
 	}
 	
 }
