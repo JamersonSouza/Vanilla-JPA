@@ -47,6 +47,9 @@ public class CadastroPedidos {
 			clienteDAO.cadastrarCliente(List.of(cliente, cliente2));
 			
 			entityManager.getTransaction().commit();
+			
+			BigDecimal totalVendido = pedidoDAO.valorTotalVendido();
+			System.out.println("Valor total vendido foi: " + totalVendido);
 		}
 		
 		private static void cadastrarProduto() {
