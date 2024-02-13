@@ -1,5 +1,6 @@
 package tech.jamersondev.loja.dao;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -44,4 +45,10 @@ public class ProdutoDAO {
 				.getResultList();
 	}
 	
+	public BigDecimal findByPrecoProdutoComNome(String name) {
+		String jpql = "SELECT p.preco FROM Produto p WHERE p.nome = :name";
+		return this.entityManager.createQuery(jpql, BigDecimal.class)
+				.setParameter("name", name)
+				.getSingleResult();
+	}
 }

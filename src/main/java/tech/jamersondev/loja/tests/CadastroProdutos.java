@@ -22,6 +22,7 @@ public class CadastroProdutos {
 		findAllProdutos();
 		findByNameProduto("Asus");
 		findByNameLojaDoProduto("Kabum");
+		findPrecoProdutoPorNome("Samsung");
 	}
 
 	private static void findAllProdutos() {
@@ -45,6 +46,14 @@ public class CadastroProdutos {
 		getByNameLojaDoProduto.forEach(p -> {System.out.println("Produto "+ p.getNome() + " Na loja: " + p.getLoja());});
 	}
 
+	private static void findPrecoProdutoPorNome(String name) {
+		EntityManager entityManager = JPAUtil.getEntityManager();
+		ProdutoDAO produtoDAO = new ProdutoDAO(entityManager);
+		BigDecimal preco = produtoDAO.findByPrecoProdutoComNome(name);
+		System.out.println("Preço do produto: " + name + " é " + preco);
+	}
+
+	
 	private static void findProduto() {
 		EntityManager entityManager = JPAUtil.getEntityManager();
 		ProdutoDAO produtoDAO = new ProdutoDAO(entityManager);
@@ -58,15 +67,15 @@ public class CadastroProdutos {
 		Loja loja3 = new Loja(UUID.randomUUID(), "Casas bahia");
 		
 		Produto celular = new Produto(UUID.randomUUID(), "Xiaomi",
-				"Redmi note 12", new BigDecimal("800"), CategoriaProdutosEnum.CELULAR,
+				"Redmi note 12", new BigDecimal("1000"), CategoriaProdutosEnum.CELULAR,
 				loja2);
 		
 		Produto celular2 = new Produto(UUID.randomUUID(), "Samsung",
-				"A12", new BigDecimal("800"), CategoriaProdutosEnum.CELULAR,
+				"A12", new BigDecimal("1300"), CategoriaProdutosEnum.CELULAR,
 				loja);
 		
 		Produto celular3 = new Produto(UUID.randomUUID(), "Asus",
-				"Zenfone", new BigDecimal("800"), CategoriaProdutosEnum.CELULAR,
+				"Zenfone", new BigDecimal("790"), CategoriaProdutosEnum.CELULAR,
 				loja3);
 		
 		EntityManager entityManager = JPAUtil.getEntityManager();
