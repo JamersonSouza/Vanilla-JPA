@@ -25,6 +25,15 @@ public class CadastroPedidos {
 			cadastrarProduto();
 			
 			NovoPedido();
+			findPedidoComCliente();
+		}
+
+		private static void findPedidoComCliente() {
+			EntityManager entityManager = JPAUtil.getEntityManager();
+			PedidoDAO pedidodao = new PedidoDAO(entityManager);
+			Pedido pedido = pedidodao.buscarPedidoComCliente(1l);
+			entityManager.close();
+			System.out.println("nome do cliente após conexão fechada: "+ pedido.getCliente().getNome());
 		}
 
 		private static void NovoPedido() {

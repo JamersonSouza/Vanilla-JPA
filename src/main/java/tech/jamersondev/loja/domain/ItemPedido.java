@@ -5,6 +5,7 @@ import java.util.UUID;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -25,10 +26,10 @@ public class ItemPedido {
 	
 	private int quantidade;
 	
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY)
 	private Pedido pedido;
 	
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY)
 	private Produto produto;
 	public ItemPedido() {
 		
