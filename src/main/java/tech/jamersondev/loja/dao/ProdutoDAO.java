@@ -1,9 +1,14 @@
 package tech.jamersondev.loja.dao;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.List;
 
 import javax.persistence.EntityManager;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Predicate;
+import javax.persistence.criteria.Root;
 
 import tech.jamersondev.loja.domain.Produto;
 
@@ -50,5 +55,24 @@ public class ProdutoDAO {
 		return this.entityManager.createQuery(jpql, BigDecimal.class)
 				.setParameter("name", name)
 				.getSingleResult();
+	}
+	
+	
+	public List<Produto> findDynamicProdutosComCriteria(String nome, BigDecimal preco, LocalDate dataCadastro) {
+			CriteriaBuilder criteria = entityManager.getCriteriaBuilder();
+			CriteriaQuery<Produto> query = criteria.createQuery(Produto.class);
+			Root<Produto> from = query.from(Produto.class);
+			Predicate filter = criteria.and();
+			if(nome != null && !nome.trim().isEmpty()) {
+				filter = criteria.and(filter, criteria.equal(from.get("nome"), nome));
+			}
+			if(preco != null) {
+				filter = criteria.and(filter, criteria.equal(from.get("preco"), preco));
+			}
+			if(dataCadastro != null) {
+				filter = criteria.and(filter, criteria.equal(from.get("dataCadastro"), dataCadastro));
+			}
+			query.where(filter);
+			return entityManager.createQuery(query).getResultList();
 	}
 }
